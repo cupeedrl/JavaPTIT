@@ -1,0 +1,33 @@
+import java.util.*;
+
+public class Up {
+    static Scanner sc = new Scanner(System.in);
+    static long[] f = new long [100];
+
+    static void f() {
+        f[1] = f[2] = 1L;
+        for(int i = 3; i < 93; i++){
+            f[i] = f[i-1]+ f[i-2];
+        }
+    }
+
+    public static char test(int n, long k) {
+        if(n == 1)
+            return '0';
+        if(n == 2)
+            return '1';
+        if(k <= f[n-2])
+            return test(n-2, k);
+        return test(n-1, k - f[n-2]);
+    }
+    public static void main(String[] args)
+    {
+        int t = sc.nextInt();
+        f();
+        while(t-- > 0){
+            int n = sc.nextInt();
+            long k = sc.nextLong();
+            System.out.println(test(n,k));
+        }
+    }
+}
