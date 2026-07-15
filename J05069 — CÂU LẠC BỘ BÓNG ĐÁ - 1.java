@@ -1,0 +1,98 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+
+class Club {
+    private String clubId, name;
+    private long price;
+
+    public Club(String clubId, String name, long price) {
+        this.clubId = clubId;
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getclubId() {
+        return clubId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+}
+
+class Match {
+    private String matchId, clubName;
+    private long audience, revenue;
+
+    public Match(String matchId, long audience) {
+        this.matchId = matchId;
+        this.clubName = clubName;
+        this.audience = audience;
+        this.revenue = revenue;
+    }
+
+    public long getAudience() {
+        return audience;
+    }
+
+    public void setRevenue(long revenue) {
+        this.revenue = revenue;
+    }
+
+    public String getMatchId() {
+        return matchId;
+    }
+
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
+
+    public String toString() {
+        return matchId + " " + clubName + " " + revenue;
+    }
+}
+
+public class J05069 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = Integer.parseInt(sc.nextLine());
+        List<Club> clubs = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            String clubId = sc.nextLine();
+            String name = sc.nextLine();
+            long price = Long.parseLong(sc.nextLine());
+            clubs.add(new Club(clubId, name, price));
+        }
+
+        int m = Integer.parseInt(sc.nextLine());
+        List<Match> matches = new ArrayList<>();
+
+        for (int i = 0; i < m; i++) {
+            String line = sc.nextLine();
+            String[] words = line.trim().split("\\s+");
+            String matchId = words[0];
+            long audience = Long.parseLong(words[1]);
+            matches.add(new Match(matchId, audience));
+        }
+
+        for (int i = 0; i < m; i++) {
+            String clubId = matches.get(i).getMatchId().substring(1,3);
+            for (Club x : clubs){
+                if(x.getclubId().equals(clubId)){
+                    matches.get(i).setClubName(x.getName());
+                    matches.get(i).setRevenue(x.getPrice()*matches.get(i).getAudience());
+                }
+            }
+        }
+
+        for(Match x : matches)
+            System.out.println(x);
+    }
+}
